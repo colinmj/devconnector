@@ -16,6 +16,7 @@ app.use(
     extended: false
   })
 );
+
 app.use(bodyParser.json());
 
 //db config
