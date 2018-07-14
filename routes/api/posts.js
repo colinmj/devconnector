@@ -225,7 +225,7 @@ router.delete(
           ).length === 0
         ) {
           return res.status(404).json({ nocomment: 'Comment not found' });
-        }
+        } 
         // get remove index
         const removeIndex = post.comments
           .map(comment => comment._id.toString())
