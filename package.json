@@ -9,7 +9,6 @@
     "start": "node server.js",
     "serve": "nodemon server.js",
     "dev": "concurrently \"npm run serve\" \"npm run client\""
-
   },
   "author": "Colin Matson-Jones",
   "license": "MIT",
