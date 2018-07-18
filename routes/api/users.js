@@ -16,15 +16,7 @@ const { User } = require('../../models/User');
 
 // we already have api/users accounted for
 
-//@get    GET api/users/test
-//@desc   tests users route
-//@access public
 
-router.get('/test', (req, res) => {
-  res.json({
-    msg: 'Users is working'
-  });
-});
 
 //@get    GET api/users/register
 //@desc   Register a user
@@ -110,7 +102,7 @@ router.post('/login', (req, res) => {
           payload,
           keys.secretOrKey,
           {
-            expiresIn: 3600
+            expiresIn: 60000
           },
           (err, token) => {
             res.json({
