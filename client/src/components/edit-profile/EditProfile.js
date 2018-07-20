@@ -6,8 +6,9 @@ import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import SelectListGroup from '../common/SelectListGroup';
 import InputGroup from '../common/InputGroup';
 import { withRouter } from 'react-router-dom';
+import isEmpty from '../../validation/isEmpty';
 
-import { createProfile } from '../../actions/profileActions';
+import { createProfile, getCurrentProfile } from '../../actions/profileActions';
 
 class CreateProfile extends Component {
   constructor(props) {
@@ -34,10 +35,61 @@ class CreateProfile extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentDidMount() {
+    this.props.getCurrentProfile();
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({
         errors: nextProps.errors
+      });
+    }
+
+    if (nextProps.profile.profile) {
+      const { profile } = nextProps.profile;
+      // bring skills array back to comma separated string
+      const skillsCSV = profile.skills.join(',');
+      //if profile field doesn't exist, make empty string
+      profile.company = !isEmpty(profile.company) ? profile.company : '';
+      profile.location = !isEmpty(profile.location) ? profile.location : '';
+      profile.website = !isEmpty(profile.website) ? profile.website : '';
+      profile.githubusername = !isEmpty(profile.githubusername)
+        ? profile.githubusername
+        : '';
+      profile.bio = !isEmpty(profile.bio) ? profile.bio : '';
+      profile.social = !isEmpty(profile.social) ? profile.social : {};
+      profile.twitter = !isEmpty(profile.social.twitter)
+        ? profile.social.twitter
+        : '';
+      profile.facebook = !isEmpty(profile.social.facebook)
+        ? profile.social.facebook
+        : '';
+      profile.linkedin = !isEmpty(profile.social.linkedin)
+        ? profile.social.linkedin
+        : '';
+      profile.instagram = !isEmpty(profile.social.instagram)
+        ? profile.social.instagram
+        : '';
+      profile.youtube = !isEmpty(profile.social.youtube)
+        ? profile.social.youtube
+        : '';
+
+      // set the component state values
+      this.setState({
+        handle: profile.handle,
+        company: profile.company,
+        website: profile.website,
+        location: profile.location,
+        status: profile.status,
+        skills: skillsCSV,
+        githubusername: profile.githubusername,
+        bio: profile.bio,
+        twitter: profile.twitter,
+        facebook: profile.facebook,
+        linkedin: profile.linkedin,
+        youtube: profile.youtube,
+        instagram: profile.instagram
       });
     }
   }
@@ -164,10 +216,8 @@ class CreateProfile extends Component {
         <div className="container" />
         <div className="row">
           <div className="col-md-8 m-auto">
-            <h1 className="display-4 text-center">Create your Profile</h1>
-            <p className="lead text-center">
-              Lets get some information to make your profile stand out
-            </p>
+            <h1 className="display-4 text-center">Edit Profile</h1>
+
             <small className="d-block pb-3">* = required fields </small>
 
             <form onSubmit={this.onSubmit}>
@@ -267,7 +317,9 @@ class CreateProfile extends Component {
 
 CreateProfile.propTypes = {
   profile: PropTypes.object.isRequired,
-  errors: PropTypes.object
+  errors: PropTypes.object,
+  createProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -277,5 +329,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createProfile }
+  { createProfile, getCurrentProfile }
 )(withRouter(CreateProfile));
