@@ -57,6 +57,38 @@ export const clearCurrentProfile = () => {
   };
 };
 
+//add experience
+
+export const addExperience = (expData, history) => dispatch => {
+  axios
+    .post('/api/profile/experience', expData)
+    .then(res => {
+      history.push('/dashboard');
+    })
+    .catch(e => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: e.response.data
+      });
+    });
+};
+
+//add education
+
+export const addEducation = (eduData, history) => dispatch => {
+  axios
+    .post('/api/profile/education', eduData)
+    .then(res => {
+      history.push('/dashboard');
+    })
+    .catch(e => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: e.response.data
+      });
+    });
+};
+
 //delete account and profile
 export const deleteAccount = () => dispatch => {
   if (
