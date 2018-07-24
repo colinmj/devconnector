@@ -10,7 +10,9 @@ import CreateProfile from './components/create-profile/CreateProfile';
 import EditProfile from './components/edit-profile/EditProfile';
 import AddExperience from './components/add-credentials/AddExperience';
 import AddEducation from './components/add-credentials/AddEducation';
-
+import Profiles from './components/profiles/Profiles';
+import Profile from './components/profile/Profile';
+import NotFound from './components/notfound/NotFound';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Navbar from './components/layout/Navbar';
@@ -55,6 +57,8 @@ class App extends Component {
             <div className="container">
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/profiles" component={Profiles} />
+              <Route exact path="/profile/:handle" component={Profile} />
 
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
@@ -79,6 +83,7 @@ class App extends Component {
                   component={AddEducation}
                 />
               </Switch>
+              <Route exact path="/not-found" component={NotFound} />
             </div>
             <Footer />
           </div>

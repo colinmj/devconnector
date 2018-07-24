@@ -51,6 +51,7 @@ router.get(
 router.get('/all', (req, res) => {
   const errors = {};
   Profile.find()
+    .populate('user', ['name', 'avatar'])
     .then(profiles => {
       if (!profiles) {
         errors.noProfiles = 'There are no profiles at this time';
@@ -74,7 +75,7 @@ router.get('/handle/:handle', (req, res) => {
   Profile.findOne({
     handle: req.params.handle
   })
-    .populate('user', ['name', 'avatart'])
+    .populate('user', ['name', 'avatar'])
     .then(profile => {
       if (!profile) {
         errors.noProfile = 'There is no profile for that user';
@@ -94,7 +95,7 @@ router.get('/user/:user_id', (req, res) => {
   Profile.findOne({
     user: req.params.user_id
   })
-    .populate('user', ['name', 'avatart'])
+    .populate('user', ['name', 'avatar'])
     .then(profile => {
       if (!profile) {
         errors.noProfile = 'There is no profile for that user';
@@ -250,6 +251,7 @@ router.post(
         degree: req.body.degree,
         fieldofstudy: req.body.fieldofstudy,
         from: req.body.from,
+        to: req.body.to,
         current: req.body.current,
         description: req.body.description
       };
