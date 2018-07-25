@@ -13,6 +13,8 @@ import AddEducation from './components/add-credentials/AddEducation';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
 import NotFound from './components/notfound/NotFound';
+import Posts from './components/posts/Posts';
+import Post from './components/post/Post';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Navbar from './components/layout/Navbar';
@@ -82,6 +84,8 @@ class App extends Component {
                   path="/add-education"
                   component={AddEducation}
                 />
+                <PrivateRoute exact path="/post/:id" component={Post} />
+                <PrivateRoute exact path="/feed" component={Posts} />
               </Switch>
               <Route exact path="/not-found" component={NotFound} />
             </div>
